@@ -60,7 +60,7 @@ the same server connected and served tool calls in the active session.
 - Published to `ghcr.io/legido-ai/hackertube-mcp` for `linux/amd64` and
   `linux/arm64`; package visibility is public.
 - Branch image digest:
-  `sha256:9c41f38fa093993d1465cb8b085580a0e477511a21c428cfbb09e438f9440e44`.
+  `sha256:3989eccbd77cd5bb2a330beb40d88f0f5dc62f3ec5ab46746a0aab99b96602c2`.
 - The remote GHCR image completed the same 10-tool MCP handshake and live
   `hackertube_stats` / `hackertube_search` checks.
 
@@ -82,5 +82,6 @@ the same server connected and served tool calls in the active session.
 - Source: `https://github.com/legido-ai/hackertube-mcp` (public).
 - Branch: `001-hackertube-mcp`.
 - Initial implementation commit: `286df39`.
-- Verification update commit: `475bb17`.
+- Verification update commits: `475bb17`, `5a5f6d9`.
+- Sort-default fix: `7e4a41a`.
 - Remote branch SHA was verified equal to the local HEAD after each push.
