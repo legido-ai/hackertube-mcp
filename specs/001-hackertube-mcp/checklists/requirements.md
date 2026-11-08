@@ -28,7 +28,7 @@ contract, and constitution before merge.
       call.
 - [x] CHK010 Upstream 404/429/5xx, invalid JSON, and timeouts map to stable
       error codes.
-- [x] CHK011 `npm test` passes with 37 hermetic tests and no network.
+- [x] CHK011 `npm test` passes with 38 hermetic tests and no network.
 - [x] CHK012 `npm run lint` passes.
 - [x] CHK013 The MCP handshake lists all ten tools.
 - [x] CHK014 A live search and stats call succeed through the container.

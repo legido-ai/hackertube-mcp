@@ -70,6 +70,12 @@ test("search maps filters, truncates and preserves weak", async () => {
   assert.equal(calls[0].init.headers["User-Agent"], "hackertube-mcp-test/1.0");
 });
 
+test("search omits the default relevance sort", async () => {
+  const { client, calls } = makeClient(() => json({ results: [video] }));
+  await client.search({ query: "x", sort: "relevance" });
+  assert.equal(new URL(calls[0].url).searchParams.has("sort"), false);
+});
+
 test("search rejects an empty query before fetching", async () => {
   const { client, calls } = makeClient(() => json({ results: [] }));
   await assert.rejects(() => client.search({ query: "  " }), (error) => error.code === "invalid_input");

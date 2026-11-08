@@ -10,7 +10,7 @@
 | Check | Command | Result |
 |---|---|---|
 | Syntax | `npm run lint` | PASS (7 files) |
-| Hermetic suite | `npm test` | PASS — 37 tests, 0 failures, ~2.1 s |
+| Hermetic suite | `npm test` | PASS — 38 tests, 0 failures, ~1.8 s |
 | Container build | `make docker` | PASS — `hackertube-mcp:local` |
 | MCP handshake (container) | `node scripts/container-smoke.mjs` | PASS — 10 tools listed |
 | Live stats | `hackertube_stats` | PASS — 6,454 videos, 39,834 comments, 15,041 recommenders |

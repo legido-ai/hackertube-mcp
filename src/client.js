@@ -140,7 +140,7 @@ export class HackerTubeClient {
       type: input.contentType,
       dur: input.duration,
       date: input.date,
-      sort: input.sort,
+      sort: input.sort === "relevance" ? undefined : input.sort,
       gems: input.hiddenGems ? "1" : undefined,
       evergreen: input.evergreenOnly ? "1" : undefined,
     });
