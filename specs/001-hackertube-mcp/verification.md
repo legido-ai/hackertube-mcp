@@ -15,6 +15,9 @@
 | MCP handshake (container) | `node scripts/container-smoke.mjs` | PASS — 10 tools listed |
 | Live stats | `hackertube_stats` | PASS — 6,454 videos, 39,834 comments, 15,041 recommenders |
 | Live search | `hackertube_search("distributed systems")` | PASS — Martin Kleppmann results |
+| Live video | `hackertube_video("fNk_zzaMoSs")` | PASS — metadata, HN stats, comments |
+| Live manifest | `hackertube_dataset` | PASS — six files plus zip |
+| Live download | `hackertube_dataset_download("DATA.md")` | PASS — 13,918 bytes at `/data/DATA.md` |
 
 The hermetic suite uses an injected `fetch`; it makes no network calls and needs
 no credentials. The live checks are separate and read-only.
@@ -65,5 +68,14 @@ the same server connected and served tool calls in the active session.
 
 ## Unverified at this stage
 
-- GHCR image publication and multi-arch manifest, pending the first push.
-- Package visibility on GHCR (source repository is public).
+- GHCR multi-arch manifest publication is running on the first push to
+  `001-hackertube-mcp`; the local image is already built and tested.
+- GHCR package visibility (source repository is public).
+
+## Repository
+
+- Source: `https://github.com/legido-ai/hackertube-mcp` (public).
+- Branch: `001-hackertube-mcp`.
+- Commit: `286df39` (initial implementation).
+- Remote branch SHA was verified equal to the local HEAD before this
+  verification update.
