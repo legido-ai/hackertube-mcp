@@ -57,6 +57,12 @@ the same server connected and served tool calls in the active session.
 - `/data` volume for optional dataset downloads.
 - No secrets baked into the image; `npm ci --omit=dev` only.
 - Uncompressed image size: 202 MB.
+- Published to `ghcr.io/legido-ai/hackertube-mcp` for `linux/amd64` and
+  `linux/arm64`; package visibility is public.
+- Branch image digest:
+  `sha256:9c41f38fa093993d1465cb8b085580a0e477511a21c428cfbb09e438f9440e44`.
+- The remote GHCR image completed the same 10-tool MCP handshake and live
+  `hackertube_stats` / `hackertube_search` checks.
 
 ## Known limits
 
@@ -68,14 +74,13 @@ the same server connected and served tool calls in the active session.
 
 ## Unverified at this stage
 
-- GHCR multi-arch manifest publication is running on the first push to
-  `001-hackertube-mcp`; the local image is already built and tested.
-- GHCR package visibility (source repository is public).
+- `latest` is published only when the feature branch is merged to the default
+  branch; the current public tag is `001-hackertube-mcp`.
 
 ## Repository
 
 - Source: `https://github.com/legido-ai/hackertube-mcp` (public).
 - Branch: `001-hackertube-mcp`.
-- Commit: `286df39` (initial implementation).
-- Remote branch SHA was verified equal to the local HEAD before this
-  verification update.
+- Initial implementation commit: `286df39`.
+- Verification update commit: `475bb17`.
+- Remote branch SHA was verified equal to the local HEAD after each push.

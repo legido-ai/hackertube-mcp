@@ -52,6 +52,10 @@ docker run --rm -i \
   hackertube-mcp:local
 ```
 
+A public multi-arch image is published at
+`ghcr.io/legido-ai/hackertube-mcp` (current feature tag:
+`001-hackertube-mcp`; `latest` follows the default branch).
+
 ### OpenCode
 
 Add to `~/.config/opencode/opencode.json`, preserving existing settings:

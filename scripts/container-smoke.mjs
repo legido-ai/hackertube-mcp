@@ -1,12 +1,13 @@
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 
+const image = process.env.HACKERTUBE_IMAGE ?? "hackertube-mcp:local";
 const transport = new StdioClientTransport({
   command: "docker",
   args: [
     "run", "--rm", "-i",
     "--cap-drop=ALL", "--security-opt=no-new-privileges",
-    "hackertube-mcp:local",
+    image,
   ],
   stderr: "inherit",
 });
