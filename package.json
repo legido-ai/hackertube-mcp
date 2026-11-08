@@ -1,0 +1,25 @@
+{
+  "name": "hackertube-mcp",
+  "version": "0.1.0",
+  "description": "Read-only MCP server for HackerTube, the HN-curated YouTube discovery layer",
+  "type": "module",
+  "private": false,
+  "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  },
+  "main": "src/index.js",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test",
+    "lint": "node --check src/config.js && node --check src/format.js && node --check src/client.js && node --check src/server.js && node --check src/index.js && node --check scripts/smoke.js && node --check scripts/container-smoke.mjs",
+    "smoke": "node scripts/smoke.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "zod": "4.6.7"
+  }
+}

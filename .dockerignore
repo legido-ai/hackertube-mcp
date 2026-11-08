@@ -1,0 +1,12 @@
+.git
+.github
+data
+node_modules
+npm-debug.log
+tests
+specs
+.env
+.env.*
+!.env.example
+coverage
+*.tgz

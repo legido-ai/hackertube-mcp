@@ -1,6 +1,11 @@
 .env
+.env.*
+!.env.example
 .venv
-env/
 venv/
-env.bak/
-venv.bak/
+env/
+data/
+node_modules/
+coverage/
+*.tgz
+npm-debug.log*

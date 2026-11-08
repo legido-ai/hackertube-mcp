@@ -1,96 +1,93 @@
-<!--
-Template: SDD Starter Constitution v1.0.0
-This is the initial template version. No prior versions exist.
-Projects adopting this template should replace placeholder tokens
-(in square brackets) with project-specific values.
--->
+# HackerTube MCP Constitution
 
-# [PROJECT_NAME] Constitution
-
-This document governs all development on this project. It is the supreme
+This document governs all development on `hackertube-mcp`. It is the supreme
 authority for process, quality, security, and governance decisions.
 Specifications are the source of truth. No implementation proceeds without an
-approved specification. No merge or acceptance occurs without completing all
-compliance and checklist requirements.
+approved specification. No merge or acceptance occurs without completing the
+compliance gate below.
 
 ## Core Principles
 
-### I. SDD Cycle Discipline
+### I. Specification-Driven Delivery
 
-- All work MUST begin with a written specification approved through the
-  project's spec workflow before any implementation begins.
-- No code may be committed for a feature or fix that lacks an approved
-  specification referencing it.
-- Every merge or acceptance gate requires completion of the Compliance Gate
-  checklist below.
-- Specifications are the authoritative source of truth for requirements,
-  acceptance criteria, and scope boundaries.
+- Every feature or fix starts with a written specification under `specs/`.
+- The specification defines user value, acceptance criteria, scope, and
+  non-goals before code is written.
+- Implementation follows the approved plan and task list. Scope changes are
+  recorded in the spec or plan before they are implemented.
+- A completed cycle records its evidence in `verification.md`.
 
-### II. Test-First (NON-NEGOTIABLE)
+### II. Test-First, Hermetic Tests (NON-NEGOTIABLE)
 
-- TDD is mandatory. Every feature and every bug fix MUST include at least one
-  new automated test written before or alongside the implementation.
-- `make test` is the canonical test command. It MUST run the full test suite
-  and MUST pass with zero failures before any merge or acceptance.
-- A `/tests` directory MUST exist for automated regression and compliance
-  tests. Supporting harness scripts may live at the repository root when a
-  stable path is required by the toolchain.
-- Any failing test is a hard blocker. No exceptions without documented
-  justification in the plan's compliance or complexity tracking section.
+- Every behavior change includes an automated test written before or alongside
+  the implementation.
+- `make test` is the canonical test command. It MUST pass with zero failures
+  before any merge or acceptance.
+- The default suite MUST be hermetic: no live HackerTube calls, no network, no
+  credentials, no shared state.
+- Live checks are separate, opt-in smoke tests and MUST be read-only.
 
-### III. Security-First Secrets Management
+### III. Read-Only Public Upstream
 
-- All secrets (API keys, tokens, passwords, private keys) MUST be supplied
-  through environment variables only. No secrets in code, committed
-  configuration files, or container images.
-- A `.env.example` file listing every required environment variable with
-  placeholder values and documentation MUST be committed to the repository.
-- The actual `.env` file MUST never be committed and MUST be listed in
-  `.gitignore`.
-- The runtime or entrypoint MUST validate that all required environment
-  variables are set before starting.
-- An automated secret audit (scanning for committed secrets or hard-coded
-  credentials) MUST be included in the test suite or CI-equivalent checks.
+- HackerTube is a third-party public service. This project consumes its public
+  JSON endpoints only.
+- The server MUST NOT scrape YouTube pages, download video streams, bypass
+  rate limits, or write to HackerTube.
+- Requests MUST identify the client with a descriptive `User-Agent`, use a
+  bounded timeout, and return a clear error when the upstream is unavailable.
+- Dataset downloads are limited to the files advertised by HackerTube's own
+  export manifest.
 
-### IV. Workflow Requirements
+### IV. Security and Secret Hygiene
 
-- A `Makefile` MUST exist at the project root with at least `run` and `test`
-  targets.
-- A `README.md` MUST document at minimum: prerequisites, quickstart, and
-  architecture overview.
+- No credentials are required for normal operation: the HackerTube API is
+  public and unauthenticated.
+- Secrets MUST NOT be committed, baked into images, printed in logs, or included
+  in tool output. The repository MUST include a secret audit test.
+- `.env.example` documents every supported environment variable with
+  placeholder values. `.env` is ignored.
+- The container runs as an unprivileged user, drops capabilities, and exposes
+  no network port (stdio transport only).
 
-### [PRINCIPLE_5_NAME]
+### V. Small, Composable Surface
 
-[PRINCIPLE_5_DESCRIPTION]
+- Tools are thin, documented wrappers over the upstream API. Formatting is
+  explicit and compact so an agent can consume results without flooding its
+  context.
+- Prefer the smallest dependency set that is actively maintained.
+- Every tool has a stable name, a precise description, and a typed input schema.
+- Failures are returned as actionable MCP tool errors, never as silent empty
+  results or stack traces.
+
+### VI. Observability Without Leakage
+
+- Logs go to stderr and include only operational metadata: startup, upstream
+  status, latency, and error class.
+- Logs MUST NOT include full prompts, credentials, or complete upstream
+  payloads.
+- Tool responses include enough provenance (video id, HackerTube URL, HN thread
+  links) for a user to verify a result.
 
 ## Compliance Gate
 
 Before an implementation plan may proceed, verify:
 
-- [ ] Every planned feature or fix includes at least one test in `/tests`
-- [ ] `make test` runs the full test suite with no failures
-- [ ] No security or secret-management rules are violated
-- [ ] Makefile and README minimum requirements are satisfied
-- [ ] All constitutional rules are respected
+- [ ] The spec defines prioritized user stories and measurable acceptance
+      criteria.
+- [ ] Every planned behavior has a hermetic test in `tests/`.
+- [ ] `make test` runs the full suite with no failures.
+- [ ] No secret, credential, or private key is present in source or images.
+- [ ] The server remains read-only against HackerTube and YouTube.
+- [ ] README, Makefile, and `.env.example` minimum requirements are satisfied.
 
-Any exception MUST be documented in the plan's complexity tracking section
-with justification.
+Any exception MUST be documented in the plan's complexity tracking section with
+justification.
 
 ## Governance
 
-- **Supremacy**: This constitution supersedes any conflicting local
-  conventions, tool configurations, or ad-hoc practices.
-- **Amendment procedure**: Changes to this constitution MUST follow the
-  project's amendment workflow: propose the change, obtain approval, update
-  this document, record the change in `CHANGELOG.md`, and update the version
-  and last-amended date.
-- **Versioning policy**: Constitution versions follow semantic versioning.
-  MAJOR for incompatible removals or redefinitions of principles, MINOR for
-  added principles or materially expanded guidance, PATCH for wording
-  clarifications or non-semantic refinements.
-- **Compliance reviews**: Before planning or merging, maintainers MUST verify
-  compliance with this constitution and record verification in the plan's
-  Constitution Check section.
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] |
-**Last Amended**: [LAST_AMENDED_DATE]
+- The constitution outranks local convenience and generated defaults.
+- Amendments require a documented rationale and a corresponding update to the
+  spec or plan.
+- The feature branch is the unit of review. No pull requests are opened for
+  `legido-ai` repositories; the branch is pushed and merged only when the user
+  explicitly approves the completed cycle.
